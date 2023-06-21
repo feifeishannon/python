@@ -23,10 +23,8 @@ if __name__ == "__main__":
     myWin = MyMainWindow()
     myWin.show()
 
-    #
     serial_port = SerialPort()
 
-    #
     available_ports = serial_port.enumerate_ports()
     print("Available ports:", available_ports)
 
