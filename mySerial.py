@@ -17,6 +17,15 @@ class SerialPort:
         # port_list = [port.device for port in ports]
         return available_ports
 
+    def set_ports(self, port):
+        self.port = port
+
+    def set_baudrate(self, baudrate):
+        self.baudrate = baudrate
+
+    def set_stopbits(self, stopbits):
+        self.stopbits = stopbits
+
     def open_port(self):
         try:
             self.serial = serial.Serial(self.port, self.baudrate, timeout=self.timeout)

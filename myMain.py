@@ -1,4 +1,5 @@
 import sys
+import threading
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -18,12 +19,24 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         print('按钮被点击了！')
 
 
+def comportsUARTPort():
+    available_ports = serial_port.enumerate_ports()
+    for port in available_ports:
+        myWin.textBrowser.append(port.name + ' ' + port.description + '\r\n')
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWin = MyMainWindow()
     myWin.show()
 
     serial_port = SerialPort()
+
+    # 创建定时器对象，指定定时器触发后要执行的函数和时间间隔（以秒为单位）
+    timer = threading.Timer(0.1, comportsUARTPort)
+
+    # 启动定时器
+    timer.start()
 
     available_ports = serial_port.enumerate_ports()
     print("Available ports:", available_ports)
