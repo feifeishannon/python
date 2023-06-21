@@ -1,15 +1,15 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from mySerial import SerialPort
-from Ui_uartui_qt import Ui_Dialog
+from Ui_uartui_qt import Ui_MainWindow
 
 
-class MyDialog(QDialog, Ui_Dialog):
+class MyMainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
-        super(MyDialog, self).__init__(parent)
+        super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
 
         self.pushButton.clicked.connect(self.onButtonClick)
@@ -20,13 +20,13 @@ class MyDialog(QDialog, Ui_Dialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    myWin = MyDialog()
+    myWin = MyMainWindow()
     myWin.show()
 
     #
     serial_port = SerialPort()
 
-    # 
+    #
     available_ports = serial_port.enumerate_ports()
     print("Available ports:", available_ports)
 
