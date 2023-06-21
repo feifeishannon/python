@@ -12,9 +12,9 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         super(MyMainWindow, self).__init__(parent)
         self.setupUi(self)
 
-        self.pushButton.clicked.connect(self.onButtonClick)
+        self.openUARTPortButton.clicked.connect(self.openUARTPortButtonClick)
 
-    def onButtonClick(self):
+    def openUARTPortButtonClick(self):
         print('按钮被点击了！')
 
 
