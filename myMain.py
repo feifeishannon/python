@@ -41,14 +41,9 @@ if __name__ == "__main__":
     timer = threading.Timer(0.1, comportsUARTPort)
 
     # 启动定时器
-    a='bba6081'
-    b='5f6661'
-    combinations = [f"{n1}{n2}{c}" for n1 in range(10) for n2 in range(10) for c in string.ascii_lowercase]
     myWin.textBrowser.clear()
     # myWin.textBrowser.append(resultNum)
     # myWin.textBrowser.append(resultStr)
-    for str in combinations:
-        myWin.textBrowser.append(a+str+b)
     
     timer.start()
     
