@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import threading
 
@@ -21,8 +22,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
 def comportsUARTPort():
     available_ports = serial_port.enumerate_ports()
-    for port in available_ports:
-        myWin.textBrowser.append(port.name + ' ' + port.description + '\r\n')
+    try:
+        for port in available_ports:
+            myWin.textBrowser.append(port.name + ' ' + port.description + '\r\n')
+    except Exception:
+        print('发生异常')
 
 
 if __name__ == "__main__":

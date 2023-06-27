@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import csv
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
