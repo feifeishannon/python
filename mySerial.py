@@ -39,12 +39,18 @@ class SerThread(threading.Thread):
 
     def update_serial_port(self):
         while self.update_flag:
-            newportsDict = self.serial.get_serial_dict()
-            if self.serial.enumerate_ports():
-                added_ports = [portDescript for port in self.portsDict if port not in serial_dict]
-                removed_ports = [portDescript for port in self.serial.serial_list if port not in new_serial_dict]
-                for port in self.serial.serial_list:
-                    self.portsDict[port.description] = port.device
+            if self.serial.get_serial_dict():
+                newportsDict = self.serial.get_serial_dict()
+                if self.serial.enumerate_ports():
+                    added_ports = [portDescript for portDescript in newportsDict if portDescript not in self.serial_dict]
+                    removed_ports = [portDescript for portDescript in self.serial_dict if portDescript not in newportsDict]
+                    for port in added_ports:
+                        self.portsDict[port] = newportsDict.device
+                        print("Added Serial Port: ", port, newportsDict[port])
+                    for port in removed_ports:
+                        self.portsDict.pop(port)
+                        print("Removed Serial Port: ", port, self.serial_dict[port])
+                        
             time.sleep(0.1)
 
     def run(self):
@@ -69,8 +75,8 @@ class SerThread(threading.Thread):
 class Ports_dict():
     def __init__(self):
         self.port_dict = {}
-        self.port_dict.device = []
-        self.port_dict.descript = []
+        # self.port_dict.device = []
+        # self.port_dict.descript = []
 
 
 class SerialPort:

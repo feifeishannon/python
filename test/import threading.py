@@ -6,8 +6,7 @@ from tkinter import ttk
 import serial
 import serial.tools.list_ports
 
-added_ports = [port for port in new_serial_dict if port not in serial_dict]
-            removed_ports = [port for port in serial_dict if port not in new_serial_dict]
+
 # 串口操作类
 class SerialPort:
     def __init__(self, port):

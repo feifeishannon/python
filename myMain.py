@@ -41,7 +41,8 @@ if __name__ == "__main__":
     # myWin.textBrowser.append(resultNum)
     # myWin.textBrowser.append(resultStr)
     serialports = serialThread.serial.enumerate_ports()
-    myWin.comboBox.addItems(serialports.available_ports_descript)
+    serialThread.run()
+    # myWin.comboBox.addItems(serialports.available_ports_descript)
     # for str in serialports:
     #     portstr = "name:" + str.name + "\t"
     #     portstr += "description:" + str.description + "\t"

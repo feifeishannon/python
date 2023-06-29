@@ -1,5 +1,6 @@
 import serial.tools.list_ports
 
+
 # 枚举串口并返回串口字典
 def enumerate_serial_ports():
     ports = list(serial.tools.list_ports.comports())
@@ -8,8 +9,10 @@ def enumerate_serial_ports():
         serial_dict[port.description] = port.device
     return serial_dict
 
+
 # 初始化串口字典
 serial_dict = enumerate_serial_ports()
+
 
 # 动态同步更新串口字典
 def update_serial_dict():
@@ -24,6 +27,7 @@ def update_serial_dict():
         for port in removed_ports:
             print("Removed Serial Port: ", port, serial_dict[port])
         serial_dict = new_serial_dict
+
 
 # 示例：定期调用更新函数
 while True:
