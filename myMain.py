@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
+from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from mySerial import SerThread
@@ -16,7 +17,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.openUARTPortButton.clicked.connect(self.openUARTPortButtonClick)
 
     def openUARTPortButtonClick(self):
-        print('按钮被点击了！')
+        print('按钮点击了！')
 
 
 # def comportsUARTPort():
@@ -34,13 +35,13 @@ if __name__ == "__main__":
     myWin.show()
 
     # 创建串口线程
-    serialThread = SerThread()
+    serialThread = SerThread(comb=myWin.comboBox)
 
-    # 清空串口接收区
+    # 清空串口接收
     myWin.textBrowser.clear()
     # myWin.textBrowser.append(resultNum)
     # myWin.textBrowser.append(resultStr)
-    serialports = serialThread.serial.enumerate_ports()
+    
     serialThread.run()
     # myWin.comboBox.addItems(serialports.available_ports_descript)
     # for str in serialports:
@@ -48,5 +49,15 @@ if __name__ == "__main__":
     #     portstr += "description:" + str.description + "\t"
     #     portstr += "device:" + str.device + "\n"
     #     myWin.textBrowser.append(portstr)
-
+    
+    # 退出应用程序的函数
+    def quit_app():
+        # 停止线程
+        serialThread.terminate()
+        # 退出应用程序
+        QCoreApplication.quit()
+    
+    # 设置退出应用程序的信号槽
+    app.aboutToQuit.connect(quit_app)
+    
     sys.exit(app.exec_())

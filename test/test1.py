@@ -1,7 +1,7 @@
 import serial.tools.list_ports
 
 
-# Ã¶¾Ù´®¿Ú²¢·µ»Ø´®¿Ú×Öµä
+# æšä¸¾ä¸²å£å¹¶è¿”å›ä¸²å£å­—å…¸
 def enumerate_serial_ports():
     ports = list(serial.tools.list_ports.comports())
     serial_dict = {}
@@ -10,11 +10,11 @@ def enumerate_serial_ports():
     return serial_dict
 
 
-# ³õÊ¼»¯´®¿Ú×Öµä
+# åˆå§‹åŒ–ä¸²å£å­—å…¸
 serial_dict = enumerate_serial_ports()
 
 
-# ¶¯Ì¬Í¬²½¸üĞÂ´®¿Ú×Öµä
+# åŠ¨æ€åŒæ­¥æ›´æ–°ä¸²å£å­—å…¸
 def update_serial_dict():
     global serial_dict
     new_serial_dict = enumerate_serial_ports()
@@ -29,7 +29,7 @@ def update_serial_dict():
         serial_dict = new_serial_dict
 
 
-# Ê¾Àı£º¶¨ÆÚµ÷ÓÃ¸üĞÂº¯Êı
+# ç¤ºä¾‹ï¼šå®šæœŸè°ƒç”¨æ›´æ–°å‡½æ•°
 while True:
     update_serial_dict()
-    # Ö´ĞĞÆäËû²Ù×÷...
+    # æ‰§è¡Œå…¶ä»–æ“ä½œ...

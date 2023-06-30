@@ -11,23 +11,23 @@ class WaveformWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # ´´½¨²¼¾Ö
+        # åˆ›å»ºå¸ƒå±€
         layout = QVBoxLayout(self)
 
-        # ´´½¨Í¼±í
+        # åˆ›å»ºå›¾è¡¨
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
         layout.addWidget(self.canvas)
 
     def plot_waveform(self, x, y):
-        # Çå¿ÕÍ¼±í
+        # æ¸…ç©ºå›¾è¡¨
         self.figure.clear()
 
-        # ´´½¨Ò»¸ö×ÓÍ¼
+        # åˆ›å»ºä¸€ä¸ªå­å›¾
         ax = self.figure.add_subplot(111)
 
-        # »æÖÆ²¨ĞÎ
+        # ç»˜åˆ¶æ³¢å½¢
         ax.plot(x, y)
 
-        # ¸üĞÂÍ¼±í
+        # æ›´æ–°å›¾è¡¨
         self.canvas.draw()

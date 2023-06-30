@@ -1,0 +1,8 @@
+{
+    "[c]":{
+        "files.encoding": "GB2312"
+    },
+    "[python]":{
+        "files.encoding": "utf8"
+    }
+}

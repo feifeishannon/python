@@ -7,18 +7,32 @@ import serial.tools.list_ports
 
 
 class SerThread(threading.Thread):
-    def __init__(self, port=None):
+    def __init__(self, port=None, comb=None):
         super().__init__()
+        # 绑定窗体的下拉列表
+        self.comb = comb
+        
+        # 初始化串口句柄
         self.serial = SerialPort(port, baudrate=115200, timeout=0.01)
+        
+        # 绑定串口接收、发送、更新进程回调函数
         self.receive_thread = threading.Thread(target=self.receive_data)
         self.send_thread = threading.Thread(target=self.send_data)
         self.updata_serial_port_thread = threading.Thread(target=self.update_serial_port)
+        
+        # 串口接收、发送、更新进程开启标志
         self.receive_data_flag = False
         self.send_data_flag = False
         self.update_flag = False
+        
+        # 接收数据缓存
         self.data_buffer = ""
-
-        self.portsDict = Ports_dict()
+        
+        # 枚举串口list
+        self.serialports = []
+        
+        # 串口description: device 字典
+        self.portsDict = {}
 
     def receive_data(self):
         while self.receive_data_flag:
@@ -26,7 +40,8 @@ class SerThread(threading.Thread):
             if data:
                 print("Received data:", data)
             else:
-                print("No data received.")
+                # print("No data received.")
+                pass
             time.sleep(0.1)
 
     def send_data(self):
@@ -39,18 +54,10 @@ class SerThread(threading.Thread):
 
     def update_serial_port(self):
         while self.update_flag:
-            if self.serial.get_serial_dict():
-                newportsDict = self.serial.get_serial_dict()
-                if self.serial.enumerate_ports():
-                    added_ports = [portDescript for portDescript in newportsDict if portDescript not in self.serial_dict]
-                    removed_ports = [portDescript for portDescript in self.serial_dict if portDescript not in newportsDict]
-                    for port in added_ports:
-                        self.portsDict[port] = newportsDict.device
-                        print("Added Serial Port: ", port, newportsDict[port])
-                    for port in removed_ports:
-                        self.portsDict.pop(port)
-                        print("Removed Serial Port: ", port, self.serial_dict[port])
-                        
+            if self.serial.enumerate_ports():
+                print("get New Serial port")
+                self.comb.clear()
+                self.comb.addItems(self.serial.serial_descript_list)
             time.sleep(0.1)
 
     def run(self):
@@ -71,35 +78,52 @@ class SerThread(threading.Thread):
         self.serial.close()
 
 
-# �ӿ���Ϣ������
-class Ports_dict():
-    def __init__(self):
-        self.port_dict = {}
-        # self.port_dict.device = []
-        # self.port_dict.descript = []
-
-
 class SerialPort:
     def __init__(self, port=None, baudrate=115200, timeout=1):
         self.serial = serial.Serial(port, baudrate, timeout=timeout)
+        
         self.serial_list = []
+        self.serial_descript_list = []
+        
+        # 存放串口描述和接口的字典
+        self.serial_dict = {}
 
-    # ö�ٴ��ڲ����µ��б�
+    # 枚举串口并更新到列表
     def enumerate_ports(self):
-        new_serial_list = []
+        # 串口表有更新标志
         getnewport = False
-        ports = serial.tools.list_ports.comports()
-        for port in ports:
-            new_serial_list.append(port.device)
-            if new_serial_list != self.serial_list:
-                getnewport = True
-                self.serial_list = new_serial_list
-                print("Serial ports updated")
+        # 获取串口表
+        new_serial_list = serial.tools.list_ports.comports()
+        if new_serial_list != self.serial_list:
+            getnewport = True
+            print("Serial ports updated")
+        # 如果串口有变动，更新串口列表和串口词典
+        if getnewport:
+            self.serial_list = new_serial_list
+            self.updata_serial_dict()
         return getnewport
 
-    def get_serial_dict(self):
+    def updata_serial_dict(self):
+        newDict = self.make_serial_dict()  # 获取最新的串口字典
+        
+        # 比较新旧字典变动
+        added_ports = [portDescript for portDescript in newDict if portDescript not in self.serial_dict]
+        removed_ports = [portDescript for portDescript in self.serial_dict if portDescript not in newDict]
+        
+        # 更新旧字典内容
+        for port in added_ports:
+            self.serial_dict[port] = newDict[port]
+            print("Added Serial Port: ", port, newDict[port])
+        for port in removed_ports:
+            self.serial_dict.pop(port)
+            print("Removed Serial Port: ", port)
+
+    # 创建字典 description ： device
+    def make_serial_dict(self):
         serial_dict = {}
+        self.serial_descript_list = []
         for port in self.serial_list:
+            self.serial_descript_list.append(port.description)
             serial_dict[port.description] = port.device
         return serial_dict
 
@@ -135,7 +159,8 @@ class SerialPort:
             except serial.SerialException as e:
                 print(f"Failed to send data. Error: {e}")
         else:
-            print("No open serial port.")
+            pass
+            # print("No open serial port.")
 
     def read_data(self, num_bytes=1):
         if self.serial and self.serial.is_open:
@@ -146,5 +171,5 @@ class SerialPort:
             except serial.SerialException as e:
                 print(f"Failed to receive data. Error: {e}")
         else:
-            print("No open serial port.")
+            # print("No open serial port.")
             return None
