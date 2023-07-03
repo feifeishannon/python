@@ -42,7 +42,7 @@ image_element = driver.find_element(By.ID, "s_lg_img")
 # link_element = driver.find_element(By.ID, 'codeImgText')
 # print(link_element)
 # link_element.click()
-# time.sleep(1)
+time.sleep(1)
 # 获取图片的 src 属性值
 image_src = url + image_element.get_attribute("src")
 print(image_src)
