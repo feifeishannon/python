@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
+import time
+
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -15,18 +17,44 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.openUARTPortButton.clicked.connect(self.openUARTPortButtonClick)
+        self.comboBox.currentIndexChanged.connect(self.comboBox_selection_change)
+        self.selected = None
+        # 创建串口线程
+        self.serialThread = SerThread(comb=self.comboBox)
 
+        self.serialThread.run()
+        
     def openUARTPortButtonClick(self):
-        print('按钮点击了！')
+        if self.comboBox.count() > 0:
+            self.serialThread.serialPort.serial.port = self.serialThread.serialPort.serial_dict[self.selected]
+            if self.serialThread.serialPort.serial.is_open:
+                self.serialThread.receive_data_flag = False
+                self.serialThread.send_data_flag = False
+                # self.serialThread.receive_thread.join()
+                # self.serialThread.send_thread.join()
+                time.sleep(0.1)
+                
+                self.serialThread.serialPort.serial.close()
+                self.openUARTPortButton.setText("打开串口")
+                print('串口被关闭！')
+            else:
+                self.serialThread.serialPort.serial.open()
+                self.serialThread.receive_data_flag = True
+                self.serialThread.send_data_flag = True
+                # self.serialThread.receive_thread.start()
+                # self.serialThread.send_thread.start()
+                self.openUARTPortButton.setText("关闭串口")
+                print('串口被打开！')
 
+    # 关闭窗体事件
+    def closeEvent(self, event):
+        if self.serialThread.serialPort.serial.isOpen():
+            self.serialThread.serialPort.serial.close()
+        event.accept()
 
-# def comportsUARTPort():
-#     try:
-#         available_ports = serial_port.enumerate_ports()
-#         # for port in available_ports:
-#             # myWin.textBrowser.append(port.device + ' ' + port.description + '\r\n')
-#     except BaseException as e:
-#         print(f"Failed to open serial port {serial_port.port}. Error: {e}")
+    def comboBox_selection_change(self, index):
+        self.selected = self.comboBox.currentText()
+        print("Selected port: " + self.selected)
 
 
 if __name__ == "__main__":
@@ -34,26 +62,13 @@ if __name__ == "__main__":
     myWin = MyMainWindow()
     myWin.show()
 
-    # 创建串口线程
-    serialThread = SerThread(comb=myWin.comboBox)
-
     # 清空串口接收
     myWin.textBrowser.clear()
-    # myWin.textBrowser.append(resultNum)
-    # myWin.textBrowser.append(resultStr)
-    
-    serialThread.run()
-    # myWin.comboBox.addItems(serialports.available_ports_descript)
-    # for str in serialports:
-    #     portstr = "name:" + str.name + "\t"
-    #     portstr += "description:" + str.description + "\t"
-    #     portstr += "device:" + str.device + "\n"
-    #     myWin.textBrowser.append(portstr)
     
     # 退出应用程序的函数
     def quit_app():
         # 停止线程
-        serialThread.terminate()
+        myWin.serialThread.stop()
         # 退出应用程序
         QCoreApplication.quit()
     

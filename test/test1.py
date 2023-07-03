@@ -29,6 +29,7 @@ def update_serial_dict():
         serial_dict = new_serial_dict
 
 
+
 # 示例：定期调用更新函数
 while True:
     update_serial_dict()

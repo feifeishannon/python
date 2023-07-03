@@ -13,7 +13,8 @@ class SerThread(threading.Thread):
         self.comb = comb
         
         # 初始化串口句柄
-        self.serial = SerialPort(port, baudrate=115200, timeout=0.01)
+        self.serialPort = SerialPort(port, baudrate=4800, timeout=0.01)
+        self.serialPort.serial.stopbits = serial.STOPBITS_TWO
         
         # 绑定串口接收、发送、更新进程回调函数
         self.receive_thread = threading.Thread(target=self.receive_data)
@@ -27,16 +28,10 @@ class SerThread(threading.Thread):
         
         # 接收数据缓存
         self.data_buffer = ""
-        
-        # 枚举串口list
-        self.serialports = []
-        
-        # 串口description: device 字典
-        self.portsDict = {}
 
     def receive_data(self):
         while self.receive_data_flag:
-            data = self.serial.read_data()
+            data = self.serialPort.read_data()
             if data:
                 print("Received data:", data)
             else:
@@ -48,16 +43,16 @@ class SerThread(threading.Thread):
         while self.send_data_flag:
             if self.send_data_flag:
                 if self.data_buffer:
-                    self.serial.write_data(self.data_buffer)
+                    self.serialPort.write_data(self.data_buffer)
                     self.data_buffer = ""
             time.sleep(0.1)
 
     def update_serial_port(self):
         while self.update_flag:
-            if self.serial.enumerate_ports():
+            if self.serialPort.enumerate_ports():
                 print("get New Serial port")
                 self.comb.clear()
-                self.comb.addItems(self.serial.serial_descript_list)
+                self.comb.addItems(self.serialPort.serial_descript_list)
             time.sleep(0.1)
 
     def run(self):
@@ -75,7 +70,7 @@ class SerThread(threading.Thread):
         self.receive_thread.join()
         self.send_thread.join()
         self.updata_serial_port_thread.join()
-        self.serial.close()
+        self.serialPort.serial.close()
 
 
 class SerialPort:
@@ -165,11 +160,15 @@ class SerialPort:
     def read_data(self, num_bytes=1):
         if self.serial and self.serial.is_open:
             try:
-                received_data = self.serial.read(num_bytes)
-                print(f"Received data: {received_data.decode()}")
-                return received_data.decode()
-            except serial.SerialException as e:
+                received_data = None
+                received_data = self.serial.readline()
+                if received_data:
+                    print(f"Received data: {received_data.decode()}")
+                    return received_data.decode()
+                else:
+                    # print("No open serial port.")
+                    return None
+            except BaseException as e:
                 print(f"Failed to receive data. Error: {e}")
         else:
-            # print("No open serial port.")
             return None
