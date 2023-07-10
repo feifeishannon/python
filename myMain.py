@@ -18,9 +18,10 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.openUARTPortButton.clicked.connect(self.openUARTPortButtonClick)
         self.comboBox.currentIndexChanged.connect(self.comboBox_selection_change)
+        self.lineEdit.returnPressed.connect(self.sendToSerial)
         self.selected = None
         # 创建串口线程
-        self.serialThread = SerThread(comb=self.comboBox)
+        self.serialThread = SerThread(comb=self.comboBox, textBrowser=self.textBrowser, lineEdit=self.lineEdit)
 
         self.serialThread.run()
         
@@ -55,6 +56,11 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
     def comboBox_selection_change(self, index):
         self.selected = self.comboBox.currentText()
         print("Selected port: " + self.selected)
+
+    def sendToSerial(self):
+        text = self.lineEdit.text().encode('gb2312')
+        self.serialThread.data_buffer = text
+        print(text)
 
 
 if __name__ == "__main__":
