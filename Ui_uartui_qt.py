@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\me\Software\testpython\python_uart_tool\uartui_qt.ui'
+# Form implementation generated from reading ui file 'e:\shannon\python_uart_tool\uartui_qt.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(794, 1069)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -223,9 +223,15 @@ class Ui_MainWindow(object):
         self.readAllDataButton = QtWidgets.QPushButton(self.centralwidget)
         self.readAllDataButton.setGeometry(QtCore.QRect(10, 240, 121, 26))
         self.readAllDataButton.setObjectName("readAllDataButton")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(180, 240, 75, 23))
+        self.pushButton.setObjectName("pushButton")
+        self.widgetdraw = QtWidgets.QWidget(self.centralwidget)
+        self.widgetdraw.setGeometry(QtCore.QRect(10, 270, 741, 411))
+        self.widgetdraw.setObjectName("widgetdraw")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 794, 23))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -247,3 +253,4 @@ class Ui_MainWindow(object):
         self.lineEdit.setText(_translate("MainWindow", "test"))
         self.label.setText(_translate("MainWindow", "串口："))
         self.readAllDataButton.setText(_translate("MainWindow", "查询所有数据"))
+        self.pushButton.setText(_translate("MainWindow", "PushButton"))
