@@ -9,16 +9,16 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     scene = QGraphicsScene()
     
-    # ´´½¨Ò»¸ö¾ØĞÎÍ¼ĞÎÏî
+    # åˆ›å»ºä¸€ä¸ªçŸ©å½¢å›¾å½¢é¡¹
     rect_item = QGraphicsRectItem(0, 0, 100, 100)
-    rect_item.setBrush(Qt.blue)  # ÉèÖÃ¾ØĞÎÌî³äÑÕÉ«
+    rect_item.setBrush(Qt.blue)  # è®¾ç½®çŸ©å½¢å¡«å……é¢œè‰²
     
     
-    # ½«¾ØĞÎÌí¼Óµ½³¡¾°ÖĞ
+    # å°†çŸ©å½¢æ·»åŠ åˆ°åœºæ™¯ä¸­
     scene.addItem(rect_item)
     
     view = QGraphicsView(scene)
-    view.setAlignment(Qt.AlignCenter)  # ÉèÖÃÍ¼ĞÎÔÚÊÓÍ¼ÖĞµÄ¶ÔÆë·½Ê½
+    view.setAlignment(Qt.AlignCenter)  # è®¾ç½®å›¾å½¢åœ¨è§†å›¾ä¸­çš„å¯¹é½æ–¹å¼
     
     view.show()
     sys.exit(app.exec_())
