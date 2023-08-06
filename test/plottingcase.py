@@ -54,8 +54,7 @@ pg.setConfigOptions(antialias=True)
 p6 = win.addPlot(title="Updating plot")
 curve = p6.plot(pen='y')
 # data = np.random.normal(size=(10,1000))
-x2 = np.linspace(-100, 100, 1000)
-data = np.sin(x2) * 1000
+x1 = np.linspace(0, 10, 100)
 ptr = 0
 x = 0
 y = 0
@@ -70,7 +69,7 @@ def update():
     global x, y
     x += 0.01
     y = np.sin(x)
-    curve.setData(x, y)
+    curve.setData(x1, y)
 
 
 timer = QtCore.QTimer()

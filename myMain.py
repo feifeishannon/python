@@ -25,24 +25,7 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
         self.serialThread = SerThread(comb=self.comboBox, textBrowser=self.textBrowser, lineEdit=self.lineEdit)
 
         self.serialThread.run()
-        self.painter = QPainter(self.widgetdraw)
-        self.painter.setRenderHint(QPainter.Antialiasing)
-        
-        self.widgetdraw.show()
-        self.painted()
-        
-    def painted(self):
-        # painter.begin(self.widgetdraw)
-        # 设置绘制的颜色和线条样式
-        pen = QPen()
-        pen.setWidth(2)
-        pen.setColor(QColor("blue"))
-        self.painter.setPen(pen)
-
-        # 绘制图形
-        self.painter.drawRect(50, 50, 200, 100)  # 绘制一个矩形
-        self.painter.drawEllipse(300, 100, 150, 150)  # 绘制一个椭圆
-        self.painter.drawLine(500, 50, 600, 150)  # 绘制一条直线
+        self.graphicsView.plot(x=[0.0, 1.0, 2.0, 3.0], y=[4.4, 2.5, 2.1, 2.2])
 
     def openUARTPortButtonClick(self):
         if self.comboBox.count() > 0:
