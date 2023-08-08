@@ -1,5 +1,10 @@
 {
-    "pyqt-integration.pyrcc.cmd": "D:\\Program Files\\Python311\\Scripts\\pyrcc",
-    "pyqt-integration.pyuic.cmd": "D:\\Program Files\\Python311\\Scripts\\pyuic5",
-    "pyqt-integration.qtdesigner.path": "D:\\Program Files\\Python311\\Lib\\site-packages\\qt5_applications\\Qt\\bin\\designer.exe"
+    // "pyqt-integration.pyrcc.cmd": "D:\\Program Files\\Python311\\Scripts\\pyrcc",
+    // "pyqt-integration.pyuic.cmd": "D:\\Program Files\\Python311\\Scripts\\pyuic5",
+    // "pyqt-integration.qtdesigner.path": "D:\\Program Files\\Python311\\Lib\\site-packages\\qt5_applications\\Qt\\bin\\designer.exe"
+    
+    "pyqt-integration.qtdesigner.path": "C:\\Users\\futengfei\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\qt5_applications\\Qt\\bin\\designer.exe",
+    
+    "pyqt-integration.pyrcc.cmd": "C:\\Users\\futengfei\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pyrcc",
+    "pyqt-integration.pyuic.cmd": "C:\\Users\\futengfei\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pyuic5",
 }

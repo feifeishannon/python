@@ -5,11 +5,11 @@ import time
 
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtGui import QPainter, QColor, QPen, QBrush
+from PyQt5.QtCore import Qt
 
 from mySerial import SerThread
 from Ui_uartui_qt import Ui_MainWindow
-
 
 class MyMainWindow(QMainWindow, Ui_MainWindow):
 
@@ -26,15 +26,21 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.serialThread.run()
         self.graphicsView.plot(x=[0.0, 1.0, 2.0, 3.0], y=[4.4, 2.5, 2.1, 2.2])
-
+        qp = QPainter()
+        qp.begin(self)
+        brush = QBrush(Qt.SolidPattern)
+        qp.setBrush(brush)
+        
+        qp.drawRect(10, 15, 90, 60)
+        
+        qp.end()
+        
     def openUARTPortButtonClick(self):
         if self.comboBox.count() > 0:
             self.serialThread.serialPort.serial.port = self.serialThread.serialPort.serial_dict[self.selected]
             if self.serialThread.serialPort.serial.is_open:
                 self.serialThread.receive_data_flag = False
                 self.serialThread.send_data_flag = False
-                # self.serialThread.receive_thread.join()
-                # self.serialThread.send_thread.join()
                 time.sleep(0.1)
                 
                 self.serialThread.serialPort.serial.close()

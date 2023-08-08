@@ -13,13 +13,13 @@ class WaveformWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # 创建布局
-        layout = QVBoxLayout(self)
+        # # 创建布局
+        # layout = QVBoxLayout(self)
 
-        # 创建图表
-        self.figure = Figure()
-        self.canvas = FigureCanvas(self.figure)
-        layout.addWidget(self.canvas)
+        # # 创建图表
+        # self.figure = Figure()
+        # self.canvas = FigureCanvas(self.figure)
+        # layout.addWidget(self.canvas)
 
     def plot_waveform(self, x, y):
         # 清空图表
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         x, y = self.read_csv_data('data.csv')
 
         # 绘制波形图
-        self.waveform_widget.plot_waveform(x, y)
+        # self.waveform_widget.plot_waveform(x, y)
 
     def read_csv_data(self, filename):
         x = []
@@ -72,6 +72,86 @@ class MainWindow(QMainWindow):
             print(f"Error reading CSV file: {e}")
 
         return x, y
+
+
+class TreeNode1:
+    def __init__(self, name):
+        self.name = name
+        self.children = []
+
+    def add_child(self, child_node):
+        self.children.append(child_node)
+
+    def __repr__(self, level=0):
+        ret = "|   " * level + "|--" + repr(self.name) + "\n"
+        for child in self.children:
+            ret += child.__repr__(level + 1)
+        return ret
+
+
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+        if value <= self.value:
+            if self.left is None:
+                self.left = TreeNode(value)
+            else:
+                self.left.insert(value)
+        else:
+            if self.right is None:
+                self.right = TreeNode(value)
+            else:
+                self.right.insert(value)
+
+    def __repr__(self):
+        result = []
+        
+        if self.left:
+            result.extend(self.left.__repr__())
+        result.append(self.value)
+        if self.right:
+            result.extend(self.right.__repr__())
+        
+        return result
+
+
+# # 创建二叉树
+# numbers = [5, 3, 8, 1, 4, 7, 9]
+# root = TreeNode(numbers[0])
+
+# for num in numbers[1:]:
+#     root.insert(num)
+
+# # 打印二叉树的中序遍历结果，即有序数列
+# sorted_sequence = root.__repr__()
+# print(sorted_sequence)
+
+# # 创建树结构
+# community = TreeNode("Community")
+
+# building1 = TreeNode("Building 1")
+# building1.add_child(TreeNode("Unit A"))
+# building1.add_child(TreeNode("Unit B"))
+
+# unitA = building1.children[0]
+# unitA.add_child(TreeNode("Level 1"))
+# unitA.add_child(TreeNode("Level 2"))
+
+# building2 = TreeNode("Building 2")
+# building2.add_child(TreeNode("Unit C"))
+
+# unitC = building2.children[0]
+# unitC.add_child(TreeNode("Level 1"))
+
+# community.add_child(building1)
+# community.add_child(building2)
+
+# # 打印树结构
+# print(community)
 
 
 # 创建应用程序对象
