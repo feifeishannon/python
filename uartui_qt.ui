@@ -13,6 +13,18 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="readAllDataButton">
     <property name="geometry">
@@ -210,14 +222,23 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>状态显示</string>
     </property>
-    <widget class="QGraphicsView" name="fan1">
+    <widget class="QFrame" name="fan1">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>30</x>
        <y>30</y>
-       <width>101</width>
-       <height>71</height>
+       <width>51</width>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: green;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
     </widget>
    </widget>

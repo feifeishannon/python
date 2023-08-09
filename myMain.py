@@ -4,9 +4,9 @@ import sys
 import time
 
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QPainter, QColor, QPen, QBrush
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsPixmapItem
+from PyQt5.QtGui import QPainter, QColor, QPen, QBrush, QPixmap
+from PyQt5.QtCore import Qt, QRectF
 
 from mySerial import SerThread
 from Ui_uartui_qt import Ui_MainWindow
@@ -26,14 +26,8 @@ class MyMainWindow(QMainWindow, Ui_MainWindow):
 
         self.serialThread.run()
         self.graphicsView.plot(x=[0.0, 1.0, 2.0, 3.0], y=[4.4, 2.5, 2.1, 2.2])
-        qp = QPainter()
-        qp.begin(self)
-        brush = QBrush(Qt.SolidPattern)
-        qp.setBrush(brush)
         
-        qp.drawRect(10, 15, 90, 60)
-        
-        qp.end()
+        self.fan1.setStyleSheet("background-color: lightblue; ")
         
     def openUARTPortButtonClick(self):
         if self.comboBox.count() > 0:

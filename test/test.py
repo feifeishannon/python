@@ -57,6 +57,34 @@ class MainWindow(QMainWindow):
 
         # 绘制波形图
         # self.waveform_widget.plot_waveform(x, y)
+        
+        # self.view = self.fan1
+        # self.scene = QGraphicsScene()
+        # self.fan1.setScene(self.scene)
+        # 在 QGraphicsScene 中绘制绿色的圆
+        # green_brush = self.scene.backgroundBrush()  # 获取当前背景画刷
+        # green_brush.setColor(Qt.GlobalColor.green)  # 设置画刷颜色为绿色
+        # self.scene.setBackgroundBrush(green_brush)  # 将修改后的画刷应用到场景
+        
+        # self.view.setstyleSheet("background-color: green;")
+
+        # circle_item = QGraphicsEllipseItem(50, 50, 100, 100)  # 创建圆形项
+        # circle_item.setBrush(green_brush)  # 设置圆形项的画刷
+        # self.scene.addItem(circle_item)  # 将圆形项添加到场景
+        
+        
+        # 创建并添加 QGraphicsPixmapItem 到 QGraphicsScene，设置透明度
+        # pixmap = QPixmap('your_image_path.png')
+        # pixmap_item = QGraphicsPixmapItem(pixmap)
+        # pixmap_item.setOpacity(0.5)  # 设置透明度
+        # self.scene.addItem(pixmap_item)
+        
+        # 获取控件的大小
+        # view_size = self.fan1.size()
+        # 创建并添加 QGraphicsRectItem 到 QGraphicsScene，大小与控件相同
+        # rect_item = QGraphicsRectItem(QRectF(0, 0, view_size.width(), view_size.height()))
+        # rect_item.setBrush(Qt.green)
+        # self.scene.addItem(rect_item)
 
     def read_csv_data(self, filename):
         x = []
